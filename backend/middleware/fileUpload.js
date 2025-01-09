@@ -1,16 +1,32 @@
 const multer = require('multer');
-const path = require('path');
 
-// Configure storage for uploaded images
+// Configure storage and filename
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, './uploads/');  // Folder to save images
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname)); // Unique filename based on timestamp
-    }
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/'); // Specify the uploads folder
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname); // Unique filename
+  },
 });
 
-const upload = multer({ storage: storage });
+// File filter (optional)
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === 'image/jpeg' ||
+    file.mimetype === 'image/png' ||
+    file.mimetype === 'image/jpg'
+  ) {
+    cb(null, true);
+  } else {
+    cb(new Error('Unsupported file type'), false);
+  }
+};
+
+// Initialize multer
+const upload = multer({
+  storage: storage,
+  fileFilter: fileFilter,
+});
 
 module.exports = upload;
