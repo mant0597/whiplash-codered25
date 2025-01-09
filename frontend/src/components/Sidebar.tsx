@@ -1,6 +1,7 @@
 import React from 'react';
 import { Leaf, Award, Users, Calendar, Settings, HelpCircle, TreePine, Home, BarChart, Menu, X, Camera, User } from 'lucide-react';
 import type { SidebarProps, SidebarItemProps, MenuItem } from '../types';
+import logo from '../assets/logo.png';
 
 const Sidebar: React.FC<SidebarProps> = ({ activePage, setActivePage, isMobileMenuOpen, setIsMobileMenuOpen }) => {
   const menuItems: MenuItem[] = [
@@ -36,12 +37,15 @@ const Sidebar: React.FC<SidebarProps> = ({ activePage, setActivePage, isMobileMe
         `}
         aria-hidden={!isMobileMenuOpen && window.innerWidth < 768}
       >
-        <div className="mb-8 mt-12 md:mt-0">
+        <div className='w-40 h-0 ml-5 '>
+          <img  src={logo} alt='Logo' />
+        </div>
+        <div className="mb-8 pt-40 md:mt-0">
           <button 
             className="w-full bg-green-500 hover:bg-green-600 text-white rounded-lg py-2 px-4 flex items-center justify-center gap-2 transition-colors"
             onClick={() => handleItemClick('garden')}
           >
-            <TreePine size={20} />
+            <TreePine size={20}/>
             Plant a Tree
           </button>
         </div>

@@ -14,6 +14,9 @@ const App: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   // Close mobile menu when window is resized to desktop view
+
+
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) {
