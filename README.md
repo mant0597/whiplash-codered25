@@ -25,6 +25,8 @@ Our goal is to empower individuals, communities, and organizations with actionab
 	# Or use pip install -r requirements.txt for Python projects
 
 
+## Since we have created Virtual Garden its not integrated here, its a mono repo itself (https://github.com/sharathsc-44/fpsgarden)
+
 Contact:
 Manthan M   : maidawatmanthan@gmail.com
 Anushka S   : engrsiddharth1@gmail.com
