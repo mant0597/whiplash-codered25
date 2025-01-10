@@ -1,0 +1,10 @@
+/* Add this CSS to ensure no unwanted box artifacts */
+.leaflet-container {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .leaflet-control-container {
+    display: none; /* Hide unwanted controls if they are causing issues */
+  }
+  

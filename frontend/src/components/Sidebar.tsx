@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Leaf, Award, Users, Calendar, Settings, HelpCircle, TreePine, Home, BarChart, Menu, X, Camera, User } from 'lucide-react';
-<<<<<<< HEAD
-=======
+
 import type { SidebarProps, SidebarItemProps, MenuItem } from '../types';
->>>>>>> c2c3d1a75060dc9b04a4ec3e96fea7184a8d67f0
+
 import logo from '../assets/logo.png';
 
 const Sidebar: React.FC<{
@@ -48,36 +47,22 @@ const Sidebar: React.FC<{
         {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
 
-<<<<<<< HEAD
-      <aside className={`fixed md:static inset-y-0 left-0 z-40 w-60 bg-white border-r h-screen p- flex flex-col
-        transform transition-transform duration-300 ease-in-out
-        ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`} 
-        aria-hidden={!isMobileMenuOpen && window.innerWidth < 768}>
-=======
       <aside 
-        className={`
-          fixed md:static inset-y-0 left-0 z-40 w-64 bg-white border-r h-screen p-4 flex flex-col
+        className={`fixed md:static inset-y-0 left-0 z-40 w-64 bg-white border-r h-screen p-4 flex flex-col
           transform transition-transform duration-300 ease-in-out
-          ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
-        `}
-        aria-hidden={!isMobileMenuOpen && window.innerWidth < 768}
+          ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}
       >
-        <div className='w-40 h-0 ml-5 '>
-          <img  src={logo} alt='Logo' />
+        <div className="w-40 h-0 ml-5">
+          <img src={logo} alt="Logo" />
         </div>
         <div className="mb-8 pt-40 md:mt-0">
           <button 
             className="w-full bg-green-500 hover:bg-green-600 text-white rounded-lg py-2 px-4 flex items-center justify-center gap-2 transition-colors"
             onClick={() => handleItemClick('garden')}
           >
-            <TreePine size={20}/>
+            <TreePine size={20} />
             Plant a Tree
           </button>
-        </div>
->>>>>>> c2c3d1a75060dc9b04a4ec3e96fea7184a8d67f0
-        
-        <div className='w-full h-auto'>
-          <img src={logo} alt='Logo' className="w-full" />
         </div>
 
         <nav className="flex-1">

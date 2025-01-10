@@ -173,8 +173,8 @@ const Profile: React.FC = () => {
             className="w-24 h-24 rounded-full border-4 border-white shadow-lg"
           />
           <div>
-            <h1 className="text-2xl font-bold">John Doe</h1>
-            <p className="text-gray-600">Eco Warrior Level 76</p>
+            <h1 className="text-2xl font-bold">Welcome Sharath</h1>
+            <p className="text-gray-600">Eco Warrior </p>
           </div>
         </div>
       </header>

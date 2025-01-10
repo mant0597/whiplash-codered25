@@ -18,6 +18,7 @@ router.post('/eco-activity', verifyToken, async (req, res) => {
 
     const pointsAwarded = ACTIVITY_POINTS[randomActivity];
 
+    console.log(`Random Activity: ${randomActivity}, Points Awarded: ${pointsAwarded}`);
     try {
         const userId = req.user.id;
         const user = await User.findById(userId);
@@ -70,7 +71,7 @@ router.post('/eco-activity', verifyToken, async (req, res) => {
 
         // Update points
         user.points += pointsAwarded;
-
+        console.log("Updated Points:", user.points);
         // Update activity log with the correct 'activityType'
         user.ecoActivities.push({
             activityType: randomActivity, // This is the required field

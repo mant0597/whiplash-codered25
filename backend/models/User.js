@@ -28,13 +28,13 @@ const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true, minlength: 6 },
     role: { type: String, default: 'user', enum: ['user', 'admin'] },
-    points: { type: Number, default: 25 },
-    streak: { type: Number, default: 0 },
-    lastActivityDate: { type: Date, default: Date.now },
-    ecoActivities: [ecoActivitySchema],
-    redeemedTrees: [redeemedTreeSchema],
-    ecoBadges: [ecoBadgeSchema],
-    plantTrees: { type: Number, default: 0 } // Initialize plantTrees to 0
+    points: { type: Number, default: 25 }, // Starting points
+    streak: { type: Number, default: 0 }, // Streak for consecutive eco activities
+    lastActivityDate: { type: Date, default: Date.now }, // Last time activity was logged
+    ecoActivities: [ecoActivitySchema], // Array of eco activities the user has done
+    redeemedTrees: [redeemedTreeSchema], // Array of redeemed trees and points used
+    ecoBadges: [ecoBadgeSchema], // Array of eco badges earned by the user
+    plantTrees: { type: Number, default: 0 } // Number of trees the user has planted
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);

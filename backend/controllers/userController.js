@@ -1,4 +1,3 @@
-// controllers/userController.js
 const User = require('../models/User');
 
 // Controller to get user stats (points and badges)
@@ -43,6 +42,7 @@ const redeemTree = async (req, res) => {
 
       res.json({ msg: "Tree redeemed successfully", user });
   } catch (err) {
+      console.error(err);
       res.status(500).json({ msg: "Server Error" });
   }
 };

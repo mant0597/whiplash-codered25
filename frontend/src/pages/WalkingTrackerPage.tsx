@@ -1,5 +1,3 @@
-// src/pages/WalkingTrackerPage.tsx
-
 import React from 'react';
 import WalkingTracker from '../components/WalkingTracker';
 

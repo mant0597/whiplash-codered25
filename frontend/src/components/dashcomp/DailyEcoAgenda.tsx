@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';  // Import Link for navigation
 import { Leaf, Music, Heart, Brain } from 'lucide-react';
 
 const activities = [
@@ -7,7 +8,8 @@ const activities = [
     description: 'Eco-friendly tips',
     icon: Leaf,
     image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09',
-    color: 'green'
+    color: 'green',
+    link: '/ml'  // Link to the Ml page
   },
   {
     title: 'Relaxing Nature Sounds',
@@ -42,11 +44,13 @@ const DailyEcoAgenda = () => {
             key={index}
             className="relative overflow-hidden rounded-xl group cursor-pointer"
           >
-            <img
-              src={activity.image}
-              alt={activity.title}
-              className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
-            />
+            <Link to={activity.link}>
+              <img
+                src={activity.image}
+                alt={activity.title}
+                className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
+              />
+            </Link>
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/20 p-4 flex flex-col justify-end">
               <h3 className="text-white text-lg font-semibold mb-1">{activity.title}</h3>
               <p className="text-white/80 text-sm">{activity.description}</p>
