@@ -2,6 +2,11 @@ import React from 'react';
 import { TreePine } from 'lucide-react';
 
 const VirtualTour: React.FC = () => {
+  // Function to handle the button click and navigate to the virtual tour URL
+  const handleStartTour = () => {
+    window.location.href = 'https://fpsgarden.vercel.app/';
+  };
+
   return (
     <div className="p-8">
       <header className="mb-8">
@@ -19,7 +24,10 @@ const VirtualTour: React.FC = () => {
         <div className="p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-bold">Your Garden View</h2>
-            <button className="bg-green-500 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+            <button
+              onClick={handleStartTour} // Add onClick to start the tour
+              className="bg-green-500 text-white px-4 py-2 rounded-lg flex items-center gap-2"
+            >
               <TreePine size={20} />
               Start Tour
             </button>

@@ -1,6 +1,4 @@
 const express = require('express');
-const upload = require('../middleware/fileUpload'); // For image upload
-const axios = require('axios');
 const { verifyToken } = require('../middleware/authMiddleware');
 const User = require('../models/User');
 
@@ -12,57 +10,85 @@ const ACTIVITY_POINTS = {
     can: 25
 };
 
-// Eco activity (Image upload and reward points)
-router.post('/eco-activity-image', verifyToken, upload.single('image'), async (req, res) => {
-    if (!req.file) {
-        return res.status(400).json({ msg: "No image uploaded" });
-    }
+// Eco activity (Random activity without image upload)
+router.post('/eco-activity', verifyToken, async (req, res) => {
+    // Simulate a random eco activity (either "plastic" or "can")
+    const activities = ['plastic', 'can'];
+    const randomActivity = activities[Math.floor(Math.random() * activities.length)];
+
+    const pointsAwarded = ACTIVITY_POINTS[randomActivity];
 
     try {
-        // Send the uploaded image to an ML model (Assuming external ML service/API)
-        const imagePath = req.file.path; // Path of the uploaded image
-        const mlResponse = await axios.post('http://localhost:5000/predict', { imagePath: imagePath });
-
-        // Process the classification result (plastic or can)
-        const activityType = mlResponse.data.activity; // Expected response: "plastic" or "can"
-        
-        // Validate classification type
-        if (!ACTIVITY_POINTS[activityType]) {
-            return res.status(400).json({ msg: "Image classification failed" });
-        }
-
-        // Find the user and reward points
         const userId = req.user.id;
         const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ msg: "User not found" });
         }
 
-        // Award points for the activity
-        const pointsAwarded = ACTIVITY_POINTS[activityType];
+        // Log the current user's activity data for debugging
+        console.log("User data:", user);
+
+        const today = new Date();
+        const lastActivityDate = user.lastActivityDate ? new Date(user.lastActivityDate) : null;
+
+        console.log("Today:", today);
+        console.log("Last Activity Date:", lastActivityDate);
+
+        // If it's the first activity (new user or no activity done before)
+        if (!lastActivityDate) {
+            // First activity, set streak to 1
+            console.log("First activity - Setting streak to 1");
+            user.streak = 1;
+        } else {
+            // Compare only the date part of the lastActivityDate and today
+            const isSameDay = today.toDateString() === lastActivityDate.toDateString();
+            const isNextDay = (today - lastActivityDate) / (1000 * 60 * 60 * 24) === 1;
+
+            console.log("Is Same Day:", isSameDay);
+            console.log("Is Next Day:", isNextDay);
+
+            if (isSameDay) {
+                // Same day, so don't reset streak, but allow multiple activities
+                console.log("Same day, keeping streak as is (or initializing to 1 if not set yet)");
+                if (user.streak === 0) {
+                    // If streak is still 0, initialize it to 1
+                    user.streak = 1;
+                }
+            } else if (isNextDay) {
+                // If it's the next day, increment streak
+                console.log("Incrementing streak by 1");
+                user.streak += 1;
+            } else {
+                // If a day is missed, reset streak to 1
+                console.log("Missed a day, resetting streak to 1");
+                user.streak = 1;
+            }
+        }
+
+        // Log the new streak value for debugging
+        console.log("Updated Streak:", user.streak);
+
+        // Update points
         user.points += pointsAwarded;
 
-        // Log the eco activity and points awarded
-        user.ecoActivities = user.ecoActivities || [];
+        // Update activity log with the correct 'activityType'
         user.ecoActivities.push({
-            activity: activityType,
-            pointsAwarded,
-            date: new Date()
+            activityType: randomActivity, // This is the required field
+            pointsEarned: pointsAwarded,  // Points earned for the activity
+            timestamp: today // The date of the activity
         });
 
+        user.lastActivityDate = today; // Update last activity date
+
+        // Save the user data
         await user.save();
 
-        // Send response with total points
+        // Send the response with updated streak and points
         res.json({
-            msg: `Eco activity recorded. You earned ${pointsAwarded} points for ${activityType}`,
-            pointsAwarded,
-            totalPoints: user.points
-        });
-
-        // Delete the uploaded image after use
-        const fs = require('fs');
-        fs.unlink(imagePath, (err) => {
-            if (err) console.error('Error deleting uploaded image:', err);
+            msg: `Eco activity recorded. You earned ${pointsAwarded} points for ${randomActivity}`,
+            pointsAwarded: pointsAwarded,
+            totalPoints: user.points,
+            streak: user.streak, // Send the updated streak to the client
         });
 
     } catch (err) {

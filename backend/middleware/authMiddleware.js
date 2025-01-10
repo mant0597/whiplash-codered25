@@ -1,6 +1,5 @@
 // middleware/authMiddleware.js
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
 
 // Middleware to verify if the user is authenticated
 const verifyToken = (req, res, next) => {
@@ -11,30 +10,21 @@ const verifyToken = (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded.user;
+        req.user = decoded.user;  // Attach user data to request object
+        console.log('Authenticated User:', req.user); // Debugging step to inspect user data
         next();
     } catch (error) {
         res.status(401).json({ msg: "Token is not valid" });
-    } 
+    }
 };
 
-// For Admin-only access (verify admin's email and password)
-const verifyAdmin = async (req, res, next) => {
-  const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin1@example.com';
-  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'adminpassword123';
 
-  // Check if the user is the admin
-  if (req.user.email === ADMIN_EMAIL) {
-      // Compare the user password with the predefined admin password
-      if (req.body.password !== ADMIN_PASSWORD) {
-        return res.status(400).json({ msg: "Invalid admin password" });
+// For Admin-only access (check user role in JWT)
+const verifyAdmin = (req, res, next) => {
+    if (req.user.role !== 'admin') {
+        return res.status(403).json({ msg: 'Access denied. Admins only.' });
     }
-      
-  } else {
-      return res.status(403).json({ msg: 'Access denied. Admins only.' });
-  }
-
-  next();
+    next();
 };
 
 module.exports = { verifyToken, verifyAdmin };
