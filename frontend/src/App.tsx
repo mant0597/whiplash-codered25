@@ -18,6 +18,13 @@ const App: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);  // Track login state
 
+<<<<<<< HEAD
+=======
+  // Close mobile menu when window is resized to desktop view
+
+
+
+>>>>>>> c2c3d1a75060dc9b04a4ec3e96fea7184a8d67f0
   useEffect(() => {
     const token = localStorage.getItem('authToken');  // Check if the token is stored
     if (token) {
