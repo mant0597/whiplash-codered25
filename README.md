@@ -29,6 +29,6 @@ Our goal is to empower individuals, communities, and organizations with actionab
 
 Contact:
 Manthan M   : maidawatmanthan@gmail.com
-Anushka S   : engrsiddharth1@gmail.com
-Siddharth S : anushkasrivastava073@gmail.com
+Anushka S   : anushkasrivastava073@gmail.com
+Siddharth S : engrsiddharth1@gmail.com
 Sharath S C : sharathsc3000@gmail.com
